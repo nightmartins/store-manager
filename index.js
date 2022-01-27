@@ -11,7 +11,7 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.POST('/products', validations.valName, validations.valQuantity, productsController.create);
+app.post('/products', validations.valName, validations.valQuantity, productsController.create);
 
 app.use(errorMiddleware);
 
