@@ -40,8 +40,22 @@ const valSearch = rescue(async (req, res, next) => {
   next();
 });
 
+const valUpdate = rescue(async (req, res, next) => {
+  const { name, quantity } = req.body;
+  const quantityMessage = '"quantity" must be a number larger than or equal to 1';
+
+  if (name.length < 5) {
+    return res.status(422).json({ message: '"name" length must be at least 5 characters long' });
+  }  
+  if (typeof quantity === 'string' || quantity < 1) {
+    return res.status(422).json({ message: `${quantityMessage}` });
+  }
+  next();
+});
+
 module.exports = {
   valName,
   valQuantity,
   valSearch,
+  valUpdate,
 };
