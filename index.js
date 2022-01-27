@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const errorMiddleware = require('./middlewares/error');
+// const errorMiddleware = require('./middlewares/error');
 const validations = require('./middlewares/validations');
 const productsController = require('./controllers/productsController');
 require('dotenv').config();
