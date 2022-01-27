@@ -37,6 +37,7 @@ const valSearch = rescue(async (req, res, next) => {
   if (!search) {
     return res.status(404).json({ message: 'Product not found' });
   }
+  console.log(search);
   next();
 });
 
