@@ -1,9 +1,9 @@
 const rescue = require('express-rescue');
-const productsModel = require('../models/productsModel');
+const productsServices = require('../services/productsService');
 
 const valName = rescue(async (req, res, next) => {
   const { name } = req.body;
-  const allProducts = await productsModel.getAll();
+  const allProducts = await productsServices.getAll();
 
   if (!name) {
     return res.status(400).json({ message: '"name" is required' });
@@ -30,7 +30,18 @@ const valQuantity = rescue(async (req, res, next) => {
   next();
 });
 
+const valSearch = rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const allProducts = await productsServices.getAll();
+  const search = allProducts.find((prod) => prod.id === id);
+  if (!search) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+  next();
+});
+
 module.exports = {
   valName,
   valQuantity,
+  valSearch,
 };

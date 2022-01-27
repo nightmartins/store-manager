@@ -13,6 +13,10 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
+app.get('/products/:id', validations.valSearch, productsController.getById);
+
+app.get('/products', productsController.getAll);
+
 app.post('/products', validations.valName, validations.valQuantity, productsController.create);
 
 // app.use(errorMiddleware);
