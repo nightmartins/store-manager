@@ -17,7 +17,7 @@ const valName = rescue(async (req, res, next) => {
   next();
 });
 
-const valQuantity = rescue(async (req, res, next) => {
+const valQuantity = rescue((req, res, next) => {
   const { quantity } = req.body;
   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
   
@@ -33,7 +33,7 @@ const valQuantity = rescue(async (req, res, next) => {
 const valSearch = rescue(async (req, res, next) => {
   const { id } = req.params;
   const allProducts = await productsServices.getAll();
-  const search = allProducts.find((prod) => prod.id === id);
+  const search = allProducts.find((prod) => prod.id === Number(id));
   if (!search) {
     return res.status(404).json({ message: 'Product not found' });
   }
