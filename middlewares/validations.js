@@ -54,9 +54,63 @@ const valUpdate = rescue((req, res, next) => {
   next();
 });
 
+// const valNewSale = rescue((req, res, next) => {
+//   const { body } = req;
+//   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
+  
+//   const valId = body.map(body.itemsSold.product_id === null);
+//   const valQuant = body.map(typeof body.itemsSold.quantity === 'string');
+//   const valNegQuant = body.map(body.itemsSold.quantity < 1);
+//   const valReqQuant = body.map(body.itemsSold.quantity === null);
+
+//   if (valId) return res.status(400).json({ message: '"product_id" is required' });
+//   if (valQuant) return res.status(422).json({ message: `${quantityMessage}` });
+//   if (valNegQuant) return res.status(422).json({ message: `${quantityMessage}` });
+//   if (valReqQuant) return res.status(400).json({ message: '"quantity" is required' });
+    
+//   next();
+// });
+
+// const valSaleId = rescue((req, res, next) => {
+//   const { body } = req;
+//   const valId = [];
+
+//   body.forEach((element) => {
+//     if (!element.product_id) {
+//       valId.push('a');
+//     }
+//   });
+
+//   if (valId) return res.status(400).json({ message: '"product_id" is required' });
+
+//   next();
+// });
+
+// const valSaleQ = rescue((req, res, next) => {
+//   const { body } = req;
+//   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
+//   const valQuant = [];
+//   const valReq = [];
+
+//   body.forEach((element) => {
+//     if (typeof element.quantity === 'string' || element.quantity < 1) {
+//       valQuant.push('a');
+//     }
+//   });
+//   body.forEach((element) => {
+//     if (!element.quantity) {
+//       valReq.push('a');
+//     }
+//   });
+//   if (valQuant) return res.status(422).json({ message: `${quantityMessage}` });
+//   if (valReq) return res.status(400).json({ message: '"quantity" is required' });
+//   next();
+// });
+
 const valNewSale = rescue((req, res, next) => {
   const { body } = req;
   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
+  
   body.forEach((element) => {
     if (!element.product_id) {
       return res.status(400).json({ message: '"product_id" is required' });
@@ -81,4 +135,6 @@ module.exports = {
   valSearch,
   valUpdate,
   valNewSale,
+  // valSaleId,
+  // valSaleQ,
 };
