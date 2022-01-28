@@ -41,7 +41,7 @@ const valSearch = rescue(async (req, res, next) => {
   next();
 });
 
-const valUpdate = rescue(async (req, res, next) => {
+const valUpdate = rescue((req, res, next) => {
   const { name, quantity } = req.body;
   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
 
@@ -54,7 +54,7 @@ const valUpdate = rescue(async (req, res, next) => {
   next();
 });
 
-const valNewSale = rescue(async (req, res, next) => {
+const valNewSale = rescue((req, res, next) => {
   const { body } = req;
   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
   body.forEach((element) => {
