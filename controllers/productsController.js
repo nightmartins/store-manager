@@ -34,6 +34,8 @@ const remove = async (req, res) => {
   }
   await productsService.remove(id);
   return res.status(200).json({ ...product });
+  /* Ref retorno do product na função:
+  https://github.com/tryber/sd-014-b-store-manager/pull/76/ */
 };
 
 module.exports = {
