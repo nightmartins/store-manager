@@ -107,34 +107,61 @@ const valUpdate = rescue((req, res, next) => {
 //   next();
 // });
 
-const valNewSale = rescue((req, res, next) => {
+const valSaleId = (req, res, next) => {
   const { body } = req;
-  const quantityMessage = '"quantity" must be a number larger than or equal to 1';
-  
+
   body.forEach((element) => {
     if (!element.product_id) {
       return res.status(400).json({ message: '"product_id" is required' });
     }
   });
+  next();
+};
+
+const valSaleQ = (req, res, next) => {
+  const { body } = req;
   body.forEach((element) => {
-    if (typeof element.quantity === 'string' || element.quantity < 1) {
-      return res.status(422).json({ message: `${quantityMessage}` });
-    }
-  });
-  body.forEach((element) => {
-    if (!element.quantity) {
+    if ((!element.quantity && element.quantity !== 0)) {
       return res.status(400).json({ message: '"quantity" is required' });
+    }
+
+    if (typeof element.quantity !== 'number' || element.quantity <= 0) {
+      return res
+      .status(422).json({ message: '"quantity" must be a number larger than or equal to 1' });
     }
   });
   next();
-});
+};
+// Referência para correçâo da função: https://github.com/tryber/sd-014-b-store-manager/pull/28
+
+// const valNewSale = rescue((req, res, next) => {
+//   const { body } = req;
+//   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
+  
+//   body.forEach((element) => {
+//     if (!element.product_id) {
+//       return res.status(400).json({ message: '"product_id" is required' });
+//     }
+//   });
+//   body.forEach((element) => {
+//     if (typeof element.quantity === 'string' || element.quantity < 1) {
+//       return res.status(422).json({ message: `${quantityMessage}` });
+//     }
+//   });
+//   body.forEach((element) => {
+//     if (!element.quantity) {
+//       return res.status(400).json({ message: '"quantity" is required' });
+//     }
+//   });
+//   next();
+// });
 
 module.exports = {
   valName,
   valQuantity,
   valSearch,
   valUpdate,
-  valNewSale,
-  // valSaleId,
-  // valSaleQ,
+  // valNewSale,
+  valSaleId,
+  valSaleQ,
 };

@@ -8,7 +8,8 @@ const {
   valName,
   valQuantity,
   valUpdate,
-  valNewSale,
+  valSaleId,
+  valSaleQ,
 } = require('./middlewares/validations');
 require('dotenv').config();
 
@@ -28,7 +29,7 @@ app.delete('/products/:id', remove);
 
 app.get('/sales', getAllSales);
 // app.get('/sales/:id', );
-app.post('/sales', valNewSale, createSale);
+app.post('/sales', valSaleId, valSaleQ, createSale);
 
 // app.use(errorMiddleware);
 
