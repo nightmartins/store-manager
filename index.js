@@ -2,14 +2,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // const errorMiddleware = require('./middlewares/error');
 const { getById, getAll, create, update, remove } = require('./controllers/productsController');
-// const { createSale } = require('./controllers/salesController');
+const { createSale } = require('./controllers/salesController');
 const {
   valSearch,
   valName,
   valQuantity,
   valUpdate,
+  valSaleId,
+  valSaleQ,
   // valNewSale,
 } = require('./middlewares/validations');
+
 require('dotenv').config();
 
 const app = express();
@@ -28,7 +31,7 @@ app.delete('/products/:id', remove);
 
 // app.get('/sales', getAllSales);
 // app.get('/sales/:id', );
-// app.post('/sales', valNewSale, createSale);
+app.post('/sales', valSaleId, valSaleQ, createSale);
 
 // app.use(errorMiddleware);
 
