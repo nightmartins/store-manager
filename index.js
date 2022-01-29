@@ -8,8 +8,8 @@ const {
   valName,
   valQuantity,
   valUpdate,
-  valSaleId,
-  valSaleQ,
+  // valSaleId,
+  // valSaleQ,
   // valNewSale,
 } = require('./middlewares/validations');
 
@@ -31,7 +31,7 @@ app.delete('/products/:id', remove);
 
 // app.get('/sales', getAllSales);
 // app.get('/sales/:id', );
-app.post('/sales', valSaleId, valSaleQ, createSale);
+// app.post('/sales', valSaleId, valSaleQ, createSale);
 
 // app.use(errorMiddleware);
 

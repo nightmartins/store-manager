@@ -37,7 +37,6 @@ const valSearch = rescue(async (req, res, next) => {
   if (!search) {
     return res.status(404).json({ message: 'Product not found' });
   }
-  console.log(search);
   next();
 });
 
@@ -107,31 +106,31 @@ const valUpdate = rescue((req, res, next) => {
 //   next();
 // });
 
-const valSaleId = (req, res, next) => {
-  const { body } = req;
+// const valSaleId = (req, res, next) => {
+//   const { body } = req;
 
-  body.forEach((element) => {
-    if (!element.product_id) {
-      return res.status(400).json({ message: '"product_id" is required' });
-    }
-  });
-  next();
-};
+//   body.forEach((element) => {
+//     if (!element.product_id) {
+//       return res.status(400).json({ message: '"product_id" is required' });
+//     }
+//   });
+//   next();
+// };
 
-const valSaleQ = (req, res, next) => {
-  const { body } = req;
-  body.forEach((element) => {
-    if ((!element.quantity && element.quantity !== 0)) {
-      return res.status(400).json({ message: '"quantity" is required' });
-    }
+// const valSaleQ = (req, res, next) => {
+//   const { body } = req;
+//   body.forEach((element) => {
+//     if ((!element.quantity && element.quantity !== 0)) {
+//       return res.status(400).json({ message: '"quantity" is required' });
+//     }
 
-    if (typeof element.quantity !== 'number' || element.quantity <= 0) {
-      return res
-      .status(422).json({ message: '"quantity" must be a number larger than or equal to 1' });
-    }
-  });
-  next();
-};
+//     if (typeof element.quantity !== 'number' || element.quantity <= 0) {
+//       return res
+//       .status(422).json({ message: '"quantity" must be a number larger than or equal to 1' });
+//     }
+//   });
+//   next();
+// };
 // Referência para correçâo da função: https://github.com/tryber/sd-014-b-store-manager/pull/28
 
 // const valNewSale = rescue((req, res, next) => {
@@ -162,6 +161,6 @@ module.exports = {
   valSearch,
   valUpdate,
   // valNewSale,
-  valSaleId,
-  valSaleQ,
+  // valSaleId,
+  // valSaleQ,
 };
