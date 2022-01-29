@@ -53,22 +53,22 @@ const valUpdate = rescue((req, res, next) => {
   next();
 });
 
-// const valNewSale = rescue((req, res, next) => {
-//   const { body } = req;
-//   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
-  
-//   const valId = body.map(body.itemsSold.product_id === null);
-//   const valQuant = body.map(typeof body.itemsSold.quantity === 'string');
-//   const valNegQuant = body.map(body.itemsSold.quantity < 1);
-//   const valReqQuant = body.map(body.itemsSold.quantity === null);
+const valNewSale = rescue((req, res, next) => {
+  const sale = req.body;
+  const quantityMessage = '"quantity" must be a number larger than or equal to 1';
 
-//   if (valId) return res.status(400).json({ message: '"product_id" is required' });
-//   if (valQuant) return res.status(422).json({ message: `${quantityMessage}` });
-//   if (valNegQuant) return res.status(422).json({ message: `${quantityMessage}` });
-//   if (valReqQuant) return res.status(400).json({ message: '"quantity" is required' });
+  const idCheck = sale.some((element) => element.product_id === undefined);
+  const typeCheck = sale.some((element) => typeof element.quantity !== 'number');
+  const negCheck = sale.some((element) => element.quantity <= 0);
+  const reqCheck = sale.some((element) => element.quantity === undefined);
+
+  if (idCheck) return res.status(400).json({ message: '"product_id" is required' });
+  if (reqCheck) return res.status(400).json({ message: '"quantity" is required' });
+  if (typeCheck) return res.status(422).json({ message: `${quantityMessage}` });
+  if (negCheck) return res.status(422).json({ message: `${quantityMessage}` });
     
-//   next();
-// });
+  next();
+});
 
 // const valSaleId = rescue((req, res, next) => {
 //   const { body } = req;
@@ -160,6 +160,7 @@ module.exports = {
   valQuantity,
   valSearch,
   valUpdate,
+  valNewSale,
   // valNewSale,
   // valSaleId,
   // valSaleQ,
