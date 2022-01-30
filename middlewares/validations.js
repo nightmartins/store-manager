@@ -1,5 +1,6 @@
 const rescue = require('express-rescue');
 const productsServices = require('../services/productsService');
+const salesService = require('../services/salesService');
 
 const valName = rescue(async (req, res, next) => {
   const { name } = req.body;
@@ -17,7 +18,7 @@ const valName = rescue(async (req, res, next) => {
   next();
 });
 
-const valQuantity = rescue((req, res, next) => {
+const valQuantity = (req, res, next) => {
   const { quantity } = req.body;
   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
   
@@ -28,7 +29,7 @@ const valQuantity = rescue((req, res, next) => {
     return res.status(400).json({ message: '"quantity" is required' });
   }
   next();
-});
+};
 
 const valSearch = rescue(async (req, res, next) => {
   const { id } = req.params;
@@ -40,7 +41,7 @@ const valSearch = rescue(async (req, res, next) => {
   next();
 });
 
-const valUpdate = rescue((req, res, next) => {
+const valUpdate = (req, res, next) => {
   const { name, quantity } = req.body;
   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
 
@@ -51,9 +52,9 @@ const valUpdate = rescue((req, res, next) => {
     return res.status(422).json({ message: `${quantityMessage}` });
   }
   next();
-});
+};
 
-const valNewSale = rescue((req, res, next) => {
+const valNewSale = (req, res, next) => {
   const sale = req.body;
   const quantityMessage = '"quantity" must be a number larger than or equal to 1';
 
@@ -68,6 +69,15 @@ const valNewSale = rescue((req, res, next) => {
   if (negCheck) return res.status(422).json({ message: `${quantityMessage}` });
     
   next();
+};
+
+const checkSale = rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const allSales = await salesService.getAllSales();
+  const saleSearch = allSales.some((sale) => sale.saleId !== id);
+  if (!saleSearch) return res.status(404).json({ message: 'Sale not found' });
+
+  next();
 });
 
 module.exports = {
@@ -76,4 +86,5 @@ module.exports = {
   valSearch,
   valUpdate,
   valNewSale,
+  checkSale,
 };
