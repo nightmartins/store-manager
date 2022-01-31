@@ -74,9 +74,21 @@ const valNewSale = (req, res, next) => {
 const checkSale = rescue(async (req, res, next) => {
   const { id } = req.params;
   const allSales = await salesService.getAllSales();
+  console.log(allSales);
   const saleSearch = allSales.some((sale) => sale.saleId !== id);
   if (!saleSearch) return res.status(404).json({ message: 'Sale not found' });
 
+  next();
+});
+
+const saleProducts = rescue(async (req, res, next) => {
+  const [sale] = req.body;
+  const allProducts = await productsServices.getAll();
+  const search = allProducts.some((prod) => prod.id === Number(sale.product_id));
+
+  if (!search) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
   next();
 });
 
@@ -87,4 +99,5 @@ module.exports = {
   valUpdate,
   valNewSale,
   checkSale,
+  saleProducts,
 };

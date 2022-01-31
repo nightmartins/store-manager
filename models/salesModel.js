@@ -58,9 +58,27 @@ const getSale = async (id) => {
   );
   return rows;
 };
+const updateSale = async (saleId, sale) => {
+  try {
+    await connection.execute(
+    `UPDATE StoreManager.sales_products
+    SET product_id = ?, quantity = ?
+    WHERE sale_id = ?`,
+    [sale.product_id, sale.quantity, saleId],
+  );
+  const upSale = {
+    saleId,
+    itemUpdated: [sale],
+  };
+  return upSale;
+} catch (error) {
+  console.error(error);
+}
+};
 
 module.exports = {
   createSale,
   getAllSales,
   getSale,
+  updateSale,
 };
