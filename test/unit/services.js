@@ -12,10 +12,12 @@ describe('Service de produtos', () => {
     describe('Quando não há produtos cadastrados', () => {
       before(() => {
         sinon.stub(productsModel, 'getAll').resolves([]);
+        sinon.stub(productsModel, 'getById').resolves([]);
       });
 
       after(() => {
         productsModel.getAll.restore();
+        productsModel.getById.restore();
       });
 
       it('buscar por todos os produtos retorna um array', async () => {
@@ -26,9 +28,9 @@ describe('Service de produtos', () => {
         const search = await productsService.getAll();
         expect(search).to.be.empty;
       });
-      it('buscar 1 produto retorna "undefined"', async () => {
+      it('buscar 1 produto retorna um array vazio', async () => {
         const search = await productsService.getById(1);
-        expect(search).to.be.undefined;
+        expect(search).to.be.empty;
       });
     });
 
@@ -144,10 +146,13 @@ describe('Service de vendas', () => {
   describe('Buscas no banco de dados', () => {
     describe('Quando não há vendas cadastrados', () => {
       before(() => {
-        sinon.stub(connection, 'execute').resolves([[]]);
+        sinon.stub(salesService, 'getAllSales').resolves([]);
+        sinon.stub(salesService, 'getSale').resolves([]);
       });
+
       after(() => {
-        connection.execute.restore();
+        salesService.getAllSales.restore();
+        salesService.getSale.restore();
       });
 
       it('buscar por todas as vendas retorna um array', async () => {
