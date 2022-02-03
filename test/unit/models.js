@@ -132,11 +132,12 @@ describe('Model de produtos', () => {
       expect(response).to.have.deep.property('id', 1);
       expect(response).to.have.deep.property('name', 'Arroz');
       expect(response).to.have.deep.property('quantity', 356);
+      // Referência para obter os values: https://stackoverflow.com/questions/41726208/chai-testing-for-values-in-array-of-objects
     });
   });
 });
 
-describe('Model de vandas', () => {
+describe('Model de vendas', () => {
   describe('Buscas no banco de dados', () => {
     describe('Quando não há vendas cadastrados', () => {
       before(() => {
